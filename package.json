@@ -1,0 +1,20 @@
+{
+  "name": "pnn_store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/phankhanhduy23995/PNN_Store.git",
+  "author": "Duy Phan <duypk@imt-soft.com>",
+  "license": "MIT",
+  "dependencies": {
+    "apidoc": "^0.17.7",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.4",
+    "passport": "^0.4.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
