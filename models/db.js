@@ -16,3 +16,13 @@ mongoose.connection.on('error', function (err) {
 mongoose.connection.on('disconnected', function () {
     console.log('Mongoose disconnected');
 });
+
+// BRING IN YOUR SCHEMAS & MODELS
+require('./role.model');
+require('./user.model');
+
+/**
+ * Insert collection from json file
+ */
+// cd C:\Program Files\MongoDB\Server\4.0\bin
+// .\mongoimport.exe --db <db_name> --collection <collection_name> --jsonArray --file <access_to_json_file>
