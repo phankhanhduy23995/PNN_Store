@@ -2,24 +2,26 @@ const mongoose = require('mongoose');
 // let gracefulShutdown;
 const dbURI = 'mongodb://localhost/pnn_store';
 const mongo_connection = process.env.MONGO_CONNECTION || dbURI;
+const log4js = require('log4js');
+const logger = log4js.getLogger('server');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(mongo_connection, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 
 // CONNECTION EVENTS
 mongoose.connection.on('connected', function () {
-    console.log('Mongoose connected to ', mongo_connection);
+    logger.info('Mongoose connected to ', mongo_connection);
 });
 mongoose.connection.on('error', function (err) {
-    console.log('Mongoose connection error: ', err);
+    logger.info('Mongoose connection error: ', err);
 });
 mongoose.connection.on('disconnected', function () {
-    console.log('Mongoose disconnected');
+    logger.info('Mongoose disconnected');
 });
 
 // BRING IN YOUR SCHEMAS & MODELS
-require('./role.model');
-require('./user.model');
+require('./role_model');
+require('./user_model');
 
 /**
  * Insert collection from json file
