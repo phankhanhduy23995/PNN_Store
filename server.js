@@ -1,14 +1,21 @@
 /**
  * Module dependencies.
  */
-var app = require('./app');
-var http = require('http');
-var debug = require('debug')('server:server');
+const app = require('./app');
+const http = require('http');
+const log4js = require('log4js');
+const debug = require('debug')('server:server');
+
+/**
+ * Initialise log4js first, so we don't miss any log messages
+ */
+log4js.configure('./config/log4js.json');
+const logger = log4js.getLogger('server');
 
 /**
  * Get port from environment and store in Express.
  */
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
@@ -19,6 +26,9 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+// server.listen(port, function () {
+//   logger.info('Express server listening on port', port);
+// });
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -27,7 +37,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  let port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe

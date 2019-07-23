@@ -1,22 +1,23 @@
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
+const log4js = require('log4js');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
+const loggerMorgan = require('morgan');
+const auth_utils = require('./lib/auth_utils');
 
 // [SH] Bring in the data model
-require('./lib/db');
+require('./models/db');
 // [SH] Bring in the Passport config after model is defined
 require('./config/passport');
 // [SH] Bring in the routes for the API (delete the default routes)
-const routesApi = require('./routes/index');
+const users_routes = require('./routes/user_routes');
 
 const app = express();
 
-app.use(logger('dev'));
+app.use(loggerMorgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -26,37 +27,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // [SH] Initialise Passport before using the route middleware
 app.use(passport.initialize());
 
-// [SH] Use the API routes when path starts with /api
-app.use('/', routesApi);
+/**
+ * Setup routes
+ */
+app.get('/', (req, res) => res.status(200).send({ message: 'Welcome to the default API route' }));
+app.use('/users', auth_utils.authorizeHeader, users_routes);
 
 /**
- * Allow any method from any host and log requests
+ * Setup logger
  */
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
-  if ('OPTIONS' === req.method) {
-    res.sendStatus(200);
-  } else {
-    console.log(`${req.ip} ${req.method} ${req.url}`);
-    next();
-  }
-});
+const logger = log4js.getLogger('http');
+app.use(log4js.connectLogger(logger));
 
-// error handlers
-
-/**
- * [SH] Catch unauthorised errors
- */
-app.use(function (err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
-    res.status(401);
-    res.json({ "message": err.name + ": " + err.message });
-  }
-});
-
-// development error handler
 /**
  * Catch 404 and forward to error handler
  */
