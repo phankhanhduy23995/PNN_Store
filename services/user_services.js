@@ -11,8 +11,11 @@ module.exports.register = function (name, email, password) {
   const user = new User();
   user.name = name;
   user.email = email;
-  // user.password_digest = utils.hashPassword(password);
-  return new Promise((resolve, reject) => {
+
+  return new Promise(async (resolve, reject) => {
+    const session = await User.startSession();
+    session.startTransaction();
+
     utils.hashPassword(password)
       .then((result) => {
         if (!result) {
@@ -22,27 +25,21 @@ module.exports.register = function (name, email, password) {
           }
         }
         user.password_digest = result;
-        return user.save();
+        return user.save(session);
       })
       .then((user) => {
-        const token = auth_utils.generateToken({ _id: user._id, name: user.name, email: user.email });
-        return token;
-      })
-      .then(token => {
-        if (!token) {
-          throw {
-            message: 'Cannot create token!',
-            code: ''
-          }
-        }
+        const token = auth_utils.generateToken({ user });
         user.token = token;
-        return Promise.all([token, user.save()]);
+        return user.save(session);
       })
-      .then(([token]) => {
-        return resolve(token);
+      .then(user => {
+        session.commitTransaction();
+        session.endSession();
+        return resolve(user);
       })
       .catch(error => {
-        console.log(error);
+        session.abortTransaction();
+        session.endSession();
         logger.error(error);
         return reject(error);
       });
