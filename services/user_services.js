@@ -27,11 +27,20 @@ module.exports.register = function (name, email, password) {
         return user.save(session);
       })
       .then((user) => {
-        const token = auth_utils.generateToken({ user });
-        user.token = token;
-        return user.save(session);
+        return auth_utils.generateToken({ user });
       })
-      .then(user => {
+      .then(token => {
+        if (!token) {
+          throw {
+            message: 'Cannot generate token!',
+            code: ''
+          }
+        }
+
+        user.token = token;
+        return Promise.all([user.save(session), token]);
+      })
+      .then(([user]) => {
         session.commitTransaction();
         session.endSession();
         return resolve(user);
