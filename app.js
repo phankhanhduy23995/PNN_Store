@@ -4,14 +4,11 @@ const log4js = require('log4js');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const passport = require('passport');
 const loggerMorgan = require('morgan');
 const auth_utils = require('./lib/auth_utils');
 
 // [SH] Bring in the data model
 require('./models/db');
-// [SH] Bring in the Passport config after model is defined
-require('./config/passport');
 // [SH] Bring in the routes for the API (delete the default routes)
 const users_routes = require('./routes/user_routes');
 
@@ -23,9 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// [SH] Initialise Passport before using the route middleware
-app.use(passport.initialize());
 
 /**
  * Setup routes

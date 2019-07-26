@@ -1,4 +1,3 @@
-const passport = require('passport');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const log4js = require('log4js');
