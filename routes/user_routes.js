@@ -26,6 +26,10 @@ const sendJSONresponse = function (res, status, content) {
  *  {
  *    "success": true,
  *    "data": {
+ *      "_id": "5d3a8091eb2c1f71b8f5c3fc",
+ *      "name": "Duy",
+ *      "email": "duy@gmail.com",
+ *      "__v": 0,
  *      "token": "abcdxfvz1234567--*324"
  *    }
  *  }
@@ -42,6 +46,46 @@ router.post('/register', function (req, res) {
     }));
   } else {
     userServices.register(name, email, password)
+      .then(data => {
+        res.json(utils.successResponse(data));
+      })
+      .catch(error => {
+        res.json(utils.failedResponse(error));
+      });
+  }
+});
+
+/**
+ * @api {post} /users/login Login
+ * @apiVersion 1.0.0
+ * @apiGroup Users
+ *
+ * @apiUse AccessHeader
+ *
+ * @apiParam (Body) {String} email User email
+ * @apiParam (Body) {String} password User password
+ *
+ * @apiSuccessExample {json} Success Response
+ * HTTP/1.1 200 OK
+ *  {
+ *    "success": true,
+ *    "data": {
+ *      "token": "abcdxfvz1234567--*324"
+ *    }
+ *  }
+ * @apiUse FailedResponse
+ */
+router.post('/login', function (req, res) {
+  let email = req.body.email;
+  let password = req.body.password;
+
+  if (!email || !password) {
+    res.json(utils.failedResponse({
+      message: 'All fields required',
+      code: null
+    }));
+  } else {
+    userServices.login(email, password)
       .then(data => {
         res.json(utils.successResponse(data));
       })

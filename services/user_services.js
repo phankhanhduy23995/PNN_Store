@@ -5,6 +5,7 @@ const logger = log4js.getLogger('user_services');
 const User = mongoose.model('user');
 const utils = require('../lib/utils');
 const auth_utils = require('../lib/auth_utils');
+const errors = require('../lib/errors');
 
 module.exports.register = function (name, email, password) {
   const user = new User();
@@ -52,4 +53,53 @@ module.exports.register = function (name, email, password) {
         return reject(error);
       });
   })
+};
+
+module.exports.login = function (email, password) {
+  return new Promise(async (resolve, reject) => {
+    const session = await User.startSession();
+    session.startTransaction();
+
+    User.findOne({ email })
+      .then(user => {
+        if (!user) {
+          throw {
+            message: errors.USER_02,
+            code: 'USER_02'
+          }
+        }
+
+        return Promise.all([user, utils.comparePassword(password, user.password_digest)]);
+      })
+      .then(([user, result]) => {
+        if (!result) {
+          throw {
+            message: 'Password invalid!',
+            code: ''
+          }
+        }
+
+        let resultData = {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          password: user.password
+        };
+
+        user.last_login = new Date();
+        return Promise.all([resultData, auth_utils.generateToken(resultData), user.save(session)]);
+      })
+      .then(([resultData, token]) => {
+        session.commitTransaction();
+        session.endSession();
+        resultData.token = token;
+        return resolve(resultData);
+      })
+      .catch(error => {
+        session.abortTransaction();
+        session.endSession();
+        logger.error(error);
+        return reject(error);
+      })
+  });
 };

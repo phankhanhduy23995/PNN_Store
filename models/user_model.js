@@ -13,7 +13,8 @@ const userSchema = new Schema({
     required: true
   },
   token: String,
-  password_digest: String
+  password_digest: String,
+  last_login: Date
 });
 
 userSchema.methods.validPassword = function (password) {
