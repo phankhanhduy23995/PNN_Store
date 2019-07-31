@@ -20,8 +20,8 @@ module.exports.register = function (name, email, password) {
       .then((result) => {
         if (!result) {
           throw {
-            message: 'Cannot hash password!',
-            code: ''
+            message: errors.PASSWORD_01,
+            code: 'PASSWORD_01'
           }
         }
         user.password_digest = result;
@@ -73,8 +73,8 @@ module.exports.login = function (email, password) {
       .then(([user, result]) => {
         if (!result) {
           throw {
-            message: 'Password invalid!',
-            code: ''
+            message: errors.PASSWORD_02,
+            code: 'PASSWORD_02'
           }
         }
 

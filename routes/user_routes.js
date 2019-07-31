@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const utils = require('../lib/utils');
+const errors = require('../lib/errors');
 const userServices = require('../services/user_services');
 
 const sendJSONresponse = function (res, status, content) {
@@ -39,8 +40,8 @@ router.post('/register', function (req, res) {
   let password = req.body.password;
   if (!name || !email || !password) {
     res.json(utils.failedResponse({
-      message: 'All fields required',
-      code: null
+      message: errors.USER_03,
+      code: 'USER_03'
     }));
   } else {
     userServices.register(name, email, password)
@@ -82,8 +83,8 @@ router.post('/login', function (req, res) {
 
   if (!email || !password) {
     res.json(utils.failedResponse({
-      message: 'All fields required',
-      code: null
+      message: errors.USER_03,
+      code: 'USER_03'
     }));
   } else {
     userServices.login(email, password)
