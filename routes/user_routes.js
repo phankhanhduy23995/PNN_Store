@@ -28,9 +28,7 @@ const sendJSONresponse = function (res, status, content) {
  *    "data": {
  *      "_id": "5d3a8091eb2c1f71b8f5c3fc",
  *      "name": "Duy",
- *      "email": "duy@gmail.com",
- *      "__v": 0,
- *      "token": "abcdxfvz1234567--*324"
+ *      "email": "duy@gmail.com"
  *    }
  *  }
  * @apiUse FailedResponse
@@ -70,6 +68,9 @@ router.post('/register', function (req, res) {
  *  {
  *    "success": true,
  *    "data": {
+ *      "_id": "5d3b08e7b1b45984a469e2ab",
+ *      "name": "Duy",
+ *      "email": "duy@gmail.com",
  *      "token": "abcdxfvz1234567--*324"
  *    }
  *  }

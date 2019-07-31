@@ -28,23 +28,22 @@ module.exports.register = function (name, email, password) {
         return user.save(session);
       })
       .then((user) => {
-        return auth_utils.generateToken({ user });
-      })
-      .then(token => {
-        if (!token) {
+        if (user == null) {
           throw {
-            message: 'Cannot generate token!',
-            code: ''
-          }
+            message: errors.CREATE,
+            code: 'CREATE'
+          };
         }
 
-        user.token = token;
-        return Promise.all([user.save(session), token]);
-      })
-      .then(([user]) => {
+        let resultData = {
+          _id: user._id,
+          name: user.name,
+          email: user.email
+        };
+
         session.commitTransaction();
         session.endSession();
-        return resolve(user);
+        return resolve(resultData);
       })
       .catch(error => {
         session.abortTransaction();

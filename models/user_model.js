@@ -12,7 +12,6 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  token: String,
   password_digest: String,
   last_login: Date
 });
