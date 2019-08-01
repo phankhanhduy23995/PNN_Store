@@ -1,0 +1,11 @@
+{
+  "name": "PNN Store API",
+  "version": "1.0.0",
+  "description": "",
+  "title": "PNN Store API document",
+  "url": "http://localhost:4000",
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}

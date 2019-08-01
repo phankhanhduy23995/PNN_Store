@@ -21,6 +21,7 @@
     "sequelize": "^5.10.1"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "apidoc": "apidoc -i routes/ -o apidoc/ -c config"
   }
 }
