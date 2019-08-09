@@ -3,14 +3,6 @@ const Schema = mongoose.Schema;
 const utils = require('../lib/utils');
 
 const userSchema = new Schema({
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now
-  },
   email: {
     type: String,
     unique: true,
@@ -19,10 +11,6 @@ const userSchema = new Schema({
   name: {
     type: String,
     required: true
-  },
-  role_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'role'
   },
   password_digest: String,
   last_login: Date
