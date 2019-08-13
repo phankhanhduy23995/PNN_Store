@@ -36,6 +36,8 @@ build/Release
 node_modules/
 jspm_packages/
 .vscode
+lib/constants.js
+apidoc/
 
 # TypeScript v1 declaration files
 typings/
