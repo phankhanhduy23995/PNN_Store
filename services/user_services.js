@@ -3,11 +3,13 @@ const Promise = require('bluebird');
 const log4js = require('log4js');
 const logger = log4js.getLogger('user_services');
 const User = mongoose.model('user');
+const Role = mongoose.model('role');
 const utils = require('../lib/utils');
 const auth_utils = require('../lib/auth_utils');
 const errors = require('../lib/errors');
+const enums = require('../lib/enums');
 
-module.exports.register = function (name, email, password) {
+module.exports.register = function (name, email, password, role_id) {
   const user = new User();
   user.name = name;
   user.email = email;
@@ -17,14 +19,33 @@ module.exports.register = function (name, email, password) {
     session.startTransaction();
 
     utils.hashPassword(password)
-      .then((result) => {
-        if (!result) {
+      .then((hash) => {
+        if (!hash) {
           throw {
             message: errors.PASSWORD_01,
             code: 'PASSWORD_01'
           }
         }
-        user.password_digest = result;
+
+        let roleQuery;
+
+        if (role_id) {
+          roleQuery = Role.findOne({ _id: role_id });
+        } else {
+          roleQuery = Role.findOne({ code: enums.ROLE.EMPLOYEE });
+        }
+        return Promise.all([hash, roleQuery]);
+      })
+      .then(([hash, role]) => {
+        if (!role) {
+          throw {
+            message: errors.ROLE_01,
+            code: 'ROLE_01'
+          };
+        }
+        console.log(role);
+        user.role_id = role._id;
+        user.password_digest = hash;
         return user.save(session);
       })
       .then((user) => {
@@ -38,7 +59,8 @@ module.exports.register = function (name, email, password) {
         let resultData = {
           _id: user._id,
           name: user.name,
-          email: user.email
+          email: user.email,
+          role_id: user.role_id
         };
 
         session.commitTransaction();

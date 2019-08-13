@@ -21,6 +21,7 @@ const sendJSONresponse = function (res, status, content) {
  * @apiParam (Body) {String} name User name
  * @apiParam (Body) {String} email User email
  * @apiParam (Body) {String} password User password
+ * @apiParam (Body) {ObjectId} role_id User role id
  *
  * @apiSuccessExample {json} Success Response
  * HTTP/1.1 200 OK
@@ -30,6 +31,7 @@ const sendJSONresponse = function (res, status, content) {
  *      "_id": "5d3a8091eb2c1f71b8f5c3fc",
  *      "name": "Duy",
  *      "email": "duy@gmail.com"
+ *      "role_id": "5d3026531225d4c75879d2da"
  *    }
  *  }
  * @apiUse FailedResponse
@@ -38,13 +40,14 @@ router.post('/register', function (req, res) {
   let name = req.body.name;
   let email = req.body.email;
   let password = req.body.password;
+  let role_id = req.body.role_id;
   if (!name || !email || !password) {
     res.json(utils.failedResponse({
       message: errors.USER_03,
       code: 'USER_03'
     }));
   } else {
-    userServices.register(name, email, password)
+    userServices.register(name, email, password, role_id)
       .then(data => {
         res.json(utils.successResponse(data));
       })
