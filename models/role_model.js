@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const roleSchema = new Schema({
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now
+  },
   name: {
     type: String,
     unique: true,
@@ -11,11 +19,7 @@ const roleSchema = new Schema({
     type: String,
     unique: true,
     required: true
-  },
-  created_at: {
-    type: Date
-  },
-  updated_at: Date
+  }
 });
 
 mongoose.model('role', roleSchema);
