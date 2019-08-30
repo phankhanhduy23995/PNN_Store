@@ -4,6 +4,7 @@ module.exports = {
   ROLE: {
     ADMIN: 'admin',
     MANAGER: 'manager',
-    EMPLOYEE: 'employee'
+    EMPLOYEE: 'employee',
+    USER: 'user'
   }
 };

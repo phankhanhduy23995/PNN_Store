@@ -26,5 +26,5 @@ require('./user_model');
 /**
  * Insert collection from json file
  */
-// cd C:\Program Files\MongoDB\Server\4.0\bin
-// .\mongoimport.exe --db <db_name> --collection <collection_name> --jsonArray --file <access_to_json_file>
+// B1: cd C:\Program Files\MongoDB\Server\4.0\bin
+// B2: .\mongoimport.exe --db <db_name> --collection <collection_name> --jsonArray --file <access_to_json_file>

@@ -8,7 +8,11 @@
     "name": "Manager"
   },
   {
-    "code": "saleman",
-    "name": "Saleman"
+    "code": "employee",
+    "name": "Employee"
+  },
+  {
+    "code": "user",
+    "name": "User"
   }
 ]

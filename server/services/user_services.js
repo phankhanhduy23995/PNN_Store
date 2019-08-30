@@ -28,11 +28,10 @@ module.exports.register = function (name, email, password, role_id) {
         }
 
         let roleQuery;
-
         if (role_id) {
-          roleQuery = Role.findOne({ _id: role_id });
+          roleQuery = Role.findOne({ _id: role_id }, { _id: 1, code: 1 });
         } else {
-          roleQuery = Role.findOne({ code: enums.ROLE.EMPLOYEE });
+          roleQuery = Role.findOne({ code: enums.ROLE.USER }, { _id: 1, code: 1 });
         }
         return Promise.all([hash, roleQuery]);
       })
@@ -43,12 +42,11 @@ module.exports.register = function (name, email, password, role_id) {
             code: 'ROLE_01'
           };
         }
-        console.log(role);
         user.role_id = role._id;
         user.password_digest = hash;
-        return user.save(session);
+        return Promise.all([user.save(session), role]);
       })
-      .then((user) => {
+      .then(([user, role]) => {
         if (user == null) {
           throw {
             message: errors.CREATE,
@@ -60,7 +58,7 @@ module.exports.register = function (name, email, password, role_id) {
           _id: user._id,
           name: user.name,
           email: user.email,
-          role_id: user.role_id
+          role: role
         };
 
         session.commitTransaction();
@@ -100,19 +98,21 @@ module.exports.login = function (email, password) {
           }
         }
 
+        let roleUser = Role.findOne({ _id: user.role_id }, { _id: 1, code: 1 });
+
         let resultData = {
           _id: user._id,
           name: user.name,
-          email: user.email,
-          password: user.password
+          email: user.email
         };
 
         user.last_login = new Date();
-        return Promise.all([resultData, auth_utils.generateToken(resultData), user.save(session)]);
+        return Promise.all([roleUser, resultData, auth_utils.generateToken(resultData), user.save(session)]);
       })
-      .then(([resultData, token]) => {
+      .then(([roleUser, resultData, token]) => {
         session.commitTransaction();
         session.endSession();
+        resultData.role = roleUser;
         resultData.token = token;
         return resolve(resultData);
       })
