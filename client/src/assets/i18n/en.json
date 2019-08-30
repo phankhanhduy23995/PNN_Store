@@ -1,0 +1,11 @@
+{
+	"LOGIN.BUTTON": "Login",
+	"LOGIN.BUTTON.FORGOT_PASSWORD": "Forgot password?",
+	"LOGIN.LOGIN_FAILED": "Cannot login into P.N.N Store!",
+	"LOGIN.LOGIN_SUCESS": "Welcome to P.N.N Store!",
+	"LOGIN.NO_USER": "You don't have account?",
+	"LOGIN.NO_USER_DESC": "Please contact administrator to get your account.",
+	"LOGIN.PHD.PASSWORD": "Password",
+	"LOGIN.PHD.EMAIL": "Email",
+	"LOGIN.TITLE": "Sign In to your account"
+}
