@@ -81,7 +81,7 @@ exports.authorizeManager = function (req, res, next) {
 };
 
 exports.authorizeAny = function (req, res, next) {
-  authorizeRoles([enums.ROLE.ADMIN, enums.ROLE.MANAGER, enums.ROLE.EMPLOYEE], req).then(() => {
+  authorizeRoles([enums.ROLE.ADMIN, enums.ROLE.MANAGER, enums.ROLE.EMPLOYEE, enums.ROLE.USER], req).then(() => {
     next();
   })
     .catch(error => {

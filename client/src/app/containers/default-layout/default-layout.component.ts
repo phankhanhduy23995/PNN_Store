@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { adminNavItems } from '../nav/admin';
 import { hrNavItems } from '../nav/manager';
 import { employeeNavItems } from '../nav/employee';
+import { userNavItems } from '../nav/user';
 import { AuthenticateService } from '../../services/authenticate.service';
 import { SessionVM } from '../../view-models/session/session-vm';
 import { RoleVM } from '../../view-models/roles/role-vm';
@@ -50,8 +51,12 @@ export class DefaultLayoutComponent implements OnInit {
               this.navItems = hrNavItems;
               break;
             }
-            default: {
+            case RoleVM.ROLES.EMPLOYEE: {
               this.navItems = employeeNavItems;
+              break;
+            }
+            default: {
+              this.navItems = userNavItems;
               break;
             }
           }
