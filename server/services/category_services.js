@@ -56,7 +56,7 @@ module.exports.createCategory = function (body) {
       .then(result => {
         if (result == null) {
           throw {
-            message: errors.CREATE,
+            message: errors.COMMON.CREATE,
             code: 'CREATE'
           };
         }
@@ -75,7 +75,7 @@ module.exports.updateCategory = function (_id, body) {
       .then(result => {
         if (result == null) {
           throw {
-            message: errors.UPDATE,
+            message: errors.COMMON.UPDATE,
             code: 'UPDATE'
           };
         }
@@ -94,11 +94,11 @@ module.exports.deleteCategory = function (_id) {
       .then(result => {
         if (result == null) {
           throw {
-            message: errors.DELETE,
+            message: errors.COMMON.DELETE,
             code: 'DELETE'
           };
         }
-        return resolve(null);
+        return resolve(result);
       })
       .catch(error => {
         logger.error(error);

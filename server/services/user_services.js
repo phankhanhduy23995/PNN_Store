@@ -49,7 +49,7 @@ module.exports.register = function (name, email, password, role_id) {
       .then(([user, role]) => {
         if (user == null) {
           throw {
-            message: errors.CREATE,
+            message: errors.COMMON.CREATE,
             code: 'CREATE'
           };
         }
