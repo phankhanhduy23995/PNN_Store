@@ -11,6 +11,7 @@ const auth_utils = require('./lib/auth_utils');
 require('./models/db');
 // [SH] Bring in the routes for the API (delete the default routes)
 const users_routes = require('./routes/user_routes');
+const category_routes = require('./routes/category_routes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 app.get('/', (req, res) => res.status(200).send({ message: 'Welcome to the default API route' }));
 app.use('/users', auth_utils.authorizeHeader, users_routes);
+app.use('/categories', auth_utils.authorizeHeader, category_routes);
 
 /**
  * Setup logger

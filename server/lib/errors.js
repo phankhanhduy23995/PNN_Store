@@ -3,6 +3,7 @@
 module.exports = {
   AUTHENTICATE_01: 'Username or password is not correct.',
   AUTHORIZE_01: 'You are not authorized to access.',
+  CATEGORY_01: 'The category does not exist.',
   SERVICE_01: 'Error occurred while calling service.',
   USER_01: 'The email has already existed.',
   USER_02: 'The user does not exist.',

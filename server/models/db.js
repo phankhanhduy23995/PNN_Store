@@ -20,6 +20,7 @@ mongoose.connection.on('disconnected', function () {
 });
 
 // BRING IN YOUR SCHEMAS & MODELS
+require('./category_model');
 require('./role_model');
 require('./user_model');
 
