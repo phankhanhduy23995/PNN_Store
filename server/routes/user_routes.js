@@ -6,11 +6,6 @@ const utils = require('../lib/utils');
 const errors = require('../lib/errors');
 const userServices = require('../services/user_services');
 
-const sendJSONresponse = function (res, status, content) {
-  res.status(status);
-  res.json(content);
-};
-
 /**
  * @api {post} /users/register Register
  * @apiVersion 1.0.0
