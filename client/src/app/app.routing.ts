@@ -57,7 +57,7 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         canActivate: [AuthorizeService],
-        data: { roles: [RoleVM.ROLES.EMPLOYEE, RoleVM.ROLES.MANAGER, RoleVM.ROLES.ADMIN] },
+        data: { roles: [RoleVM.ROLES.EMPLOYEE, RoleVM.ROLES.USER, RoleVM.ROLES.MANAGER, RoleVM.ROLES.ADMIN] },
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
       },
     ]

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
 
 import { AuthenticateService } from 'src/app/services/authenticate.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   model: LoginVM = new LoginVM();
   session: SessionVM;
   constructor(
+    private titleService: Title,
     private router: Router,
     private toastr: ToastrService,
     private userService: UserService,
@@ -23,6 +25,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticateService) { }
 
   ngOnInit() {
+    this.titleService.setTitle(this.translate.instant('PNN Store - Login'));
+
     this.authService.session$.subscribe(
       data => {
         this.session = data;
@@ -55,5 +59,9 @@ export class LoginComponent implements OnInit {
           this.toastr.error(this.translate.instant('LOGIN.LOGIN_FAILED'));
         });
     }
+  }
+
+  goRegisterPage() {
+    this.router.navigate(['/register']);
   }
 }

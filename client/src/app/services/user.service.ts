@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiResult } from '../data-transfer/api-result';
 import { LoginApiResult } from '../data-transfer/users/login.api-result';
 import { LoginVM } from '../view-models/users/login-vm';
+import { RegisterVM } from '../view-models/users/register-vm';
 
 @Injectable()
 export class UserService extends APIService {
@@ -18,5 +19,9 @@ export class UserService extends APIService {
 
   public logout() {
     return super.apiPost<ApiResult>('/users/logout', null, null, true);
+  }
+
+  public register(registerData: RegisterVM) {
+    return super.apiPost<ApiResult>('/users/register', registerData);
   }
 }

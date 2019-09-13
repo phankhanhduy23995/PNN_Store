@@ -7,5 +7,10 @@
 	"LOGIN.NO_USER_DESC": "Please contact administrator to get your account.",
 	"LOGIN.PHD.PASSWORD": "Password",
 	"LOGIN.PHD.EMAIL": "Email",
-	"LOGIN.TITLE": "Sign In to your account"
+	"LOGIN.TITLE": "Sign In to your account",
+	"REGISTER.PAGE_TITLE": "PNN Store - Register",
+	"REGISTER": {
+		"PAGE_TITLE": "PNN Store - Register",
+		"TITLE": "Register"
+	}
 }
