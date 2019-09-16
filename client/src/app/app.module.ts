@@ -56,8 +56,6 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
-import { TestKhoaphamComponent } from './views/test-khoapham/test-khoapham.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -93,8 +91,7 @@ import { TestKhoaphamComponent } from './views/test-khoapham/test-khoapham.compo
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent,
-    TestKhoaphamComponent
+    RegisterComponent
   ],
   providers: [
     Title,
