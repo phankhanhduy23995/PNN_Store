@@ -2,6 +2,9 @@
 	"AUTHORIZE.FAILED": "Authorize failed! Cannot access!",
 	"COMMON.SUBMIT.FAILED": "Submitted failed!",
 	"COMMON.SUBMIT.SUCCESS": "Submitted successfully!",
+	"DASHBOARD": {
+		"TEXT.WELCOME": "Welcome to P.N.N Store!"
+	},
 	"LOGIN": {
 		"BUTTON.LOGIN": "Login",
 		"BUTTON.GO_REGISTER": "Register Now!",
@@ -16,9 +19,10 @@
 		"TITLE": "Login"
 	},
 	"LOGOUT": {
-		"SUCCESS": "Goodbye! See you next time."
+		"LOGOUT_SUCCESS": "Goodbye! See you next time."
 	},
 	"PAGE_TITLE": {
+		"DASHBOARD": "PNN - Dashboard",
 		"LOGIN": "PNN - Login",
 		"REGISTER": "PNN - Register"
 	},
@@ -29,7 +33,7 @@
 		"PHD.EMAIL": "Email",
 		"PHD.PASSWORD": "Password",
 		"PHD.USERNAME": "Username",
-		"REGISTER_FAILED": "Register successfully",
+		"REGISTER_FAILED": "Register failed",
 		"REGISTER_SUCCESS": "Register successfully",
 		"TITLE": "Register"
 	}

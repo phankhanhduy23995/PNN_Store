@@ -69,7 +69,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   logout() {
     this.authService.clearSession();
-    this.toastr.success(this.translate.instant('LOGOUT.SUCCESS'));
+    this.toastr.success(this.translate.instant('LOGOUT.LOGOUT_SUCCESS'));
     this.router.navigate(['/login']);
   }
 }

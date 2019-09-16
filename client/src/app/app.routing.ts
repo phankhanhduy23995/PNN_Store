@@ -50,10 +50,6 @@ export const routes: Routes = [
     component: DefaultLayoutComponent,
     canActivate: [AuthorizeService],
     children: [
-      // {
-      //   path: 'dashboard',
-      //   loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
-      // },
       {
         path: 'dashboard',
         canActivate: [AuthorizeService],
