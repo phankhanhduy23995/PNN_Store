@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.titleService.setTitle(this.translate.instant('REGISTER.PAGE_TITLE'));
+    this.titleService.setTitle(this.translate.instant('PAGE_TITLE.REGISTER'));
   }
 
   goLoginPage() {
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(this.registerData).subscribe(
       resData => {
         if (resData.success) {
-          this.toastr.success(this.translate.instant('COMMON.SUBMIT.SUCCESS'));
+          this.toastr.success(this.translate.instant('REGISTER.REGISTER_SUCCESS'));
           this.loginData.email = this.registerData.email;
           this.loginData.password = this.registerData.password;
           this.userService.login(this.loginData).subscribe(
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
               if (res.data && res.data.token) {
                 const newSession = new SessionVM(res.data.token, res.data.role, res.data.name, res.data.email);
                 this.authService.setSession(newSession);
-                this.toastr.success(this.translate.instant('LOGIN.LOGIN_SUCESS'));
+                this.toastr.success(this.translate.instant('LOGIN.LOGIN_SUCCESS'));
                 // if (newSession.role.code === RoleVM.ROLES.ADMIN) {
                 //   this.router.navigate(['/users']);
                 // } else {
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
         }
       },
       error => {
-        this.toastr.error(this.translate.instant('COMMON.SUBMIT.FAILED'));
+        this.toastr.error(this.translate.instant('REGISTER.REGISTER_FAILED'));
       });
   }
 }

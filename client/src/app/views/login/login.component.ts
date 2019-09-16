@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticateService) { }
 
   ngOnInit() {
-    this.titleService.setTitle(this.translate.instant('PNN Store - Login'));
+    this.titleService.setTitle(this.translate.instant('PAGE_TITLE.LOGIN'));
 
     this.authService.session$.subscribe(
       data => {
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
           if (res.data && res.data.token) {
             const newSession = new SessionVM(res.data.token, res.data.role, res.data.name, res.data.email);
             this.authService.setSession(newSession);
-            this.toastr.success(this.translate.instant('LOGIN.LOGIN_SUCESS'));
+            this.toastr.success(this.translate.instant('LOGIN.LOGIN_SUCCESS'));
             // if (newSession.role.code === RoleVM.ROLES.ADMIN) {
             //   this.router.navigate(['/users']);
             // } else {

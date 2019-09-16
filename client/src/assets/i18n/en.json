@@ -1,16 +1,36 @@
 {
-	"LOGIN.BUTTON": "Login",
-	"LOGIN.BUTTON.FORGOT_PASSWORD": "Forgot password?",
-	"LOGIN.LOGIN_FAILED": "Cannot login into P.N.N Store!",
-	"LOGIN.LOGIN_SUCESS": "Welcome to P.N.N Store!",
-	"LOGIN.NO_USER": "You don't have account?",
-	"LOGIN.NO_USER_DESC": "Please contact administrator to get your account.",
-	"LOGIN.PHD.PASSWORD": "Password",
-	"LOGIN.PHD.EMAIL": "Email",
-	"LOGIN.TITLE": "Sign In to your account",
-	"REGISTER.PAGE_TITLE": "PNN Store - Register",
+	"AUTHORIZE.FAILED": "Authorize failed! Cannot access!",
+	"COMMON.SUBMIT.FAILED": "Submitted failed!",
+	"COMMON.SUBMIT.SUCCESS": "Submitted successfully!",
+	"LOGIN": {
+		"BUTTON.LOGIN": "Login",
+		"BUTTON.GO_REGISTER": "Register Now!",
+		"BUTTON.FORGOT_PASSWORD": "Forgot password?",
+		"DESCRIPTION": "Sign In to your account",
+		"LOGIN_FAILED": "Cannot login into P.N.N Store!",
+		"LOGIN_SUCCESS": "Welcome to P.N.N Store!",
+		"NO_USER": "You don't have account?",
+		"NO_USER_DESC": "Please contact administrator to get your account.",
+		"PHD.EMAIL": "Email",
+		"PHD.PASSWORD": "Password",
+		"TITLE": "Login"
+	},
+	"LOGOUT": {
+		"SUCCESS": "Goodbye! See you next time."
+	},
+	"PAGE_TITLE": {
+		"LOGIN": "PNN - Login",
+		"REGISTER": "PNN - Register"
+	},
 	"REGISTER": {
-		"PAGE_TITLE": "PNN Store - Register",
+		"BUTTON.GO_LOGIN": "Login",
+		"BUTTON.REGISTER": "Register",
+		"DESCRIPTION": "Create your account",
+		"PHD.EMAIL": "Email",
+		"PHD.PASSWORD": "Password",
+		"PHD.USERNAME": "Username",
+		"REGISTER_FAILED": "Register successfully",
+		"REGISTER_SUCCESS": "Register successfully",
 		"TITLE": "Register"
 	}
 }
