@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 const utils = require('../lib/utils');
 
 const userSchema = new Schema({
-  created_at: {
+  createdAt: {
     type: Date,
     default: Date.now
   },
-  updated_at: {
+  updatedAt: {
     type: Date,
     default: Date.now
   },
@@ -20,12 +20,12 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  role_id: {
+  roleId: {
     type: Schema.Types.ObjectId,
     ref: 'role'
   },
-  password_digest: String,
-  last_login: Date
+  passwordDigest: String,
+  lastLogin: Date
 });
 
 userSchema.methods.validPassword = function (password) {

@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const roleSchema = new Schema({
-  created_at: {
+  createdAt: {
     type: Date,
     default: Date.now
   },
-  updated_at: {
+  updatedAt: {
     type: Date,
     default: Date.now
   },

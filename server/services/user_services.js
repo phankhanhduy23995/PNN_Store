@@ -9,7 +9,7 @@ const auth_utils = require('../lib/auth_utils');
 const errors = require('../lib/errors');
 const enums = require('../lib/enums');
 
-module.exports.register = function (name, email, password, role_id) {
+module.exports.register = function (name, email, password, roleId) {
   const user = new User();
   user.name = name;
   user.email = email;
@@ -28,8 +28,8 @@ module.exports.register = function (name, email, password, role_id) {
         }
 
         let roleQuery;
-        if (role_id) {
-          roleQuery = Role.findOne({ _id: role_id }, { _id: 1, code: 1 });
+        if (roleId) {
+          roleQuery = Role.findOne({ _id: roleId }, { _id: 1, code: 1 });
         } else {
           roleQuery = Role.findOne({ code: enums.ROLE.USER }, { _id: 1, code: 1 });
         }
@@ -42,8 +42,8 @@ module.exports.register = function (name, email, password, role_id) {
             code: 'ROLE_01'
           };
         }
-        user.role_id = role._id;
-        user.password_digest = hash;
+        user.roleId = role._id;
+        user.passwordDigest = hash;
         return Promise.all([user.save(session), role]);
       })
       .then(([user, role]) => {
@@ -88,7 +88,7 @@ module.exports.login = function (email, password) {
           }
         }
 
-        return Promise.all([user, utils.comparePassword(password, user.password_digest)]);
+        return Promise.all([user, utils.comparePassword(password, user.passwordDigest)]);
       })
       .then(([user, result]) => {
         if (!result) {
@@ -98,7 +98,7 @@ module.exports.login = function (email, password) {
           }
         }
 
-        let roleUser = Role.findOne({ _id: user.role_id }, { _id: 1, code: 1 });
+        let roleUser = Role.findOne({ _id: user.roleId }, { _id: 1, code: 1 });
 
         let resultData = {
           _id: user._id,

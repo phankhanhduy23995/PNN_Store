@@ -16,7 +16,7 @@ const userServices = require('../services/user_services');
  * @apiParam (Body) {String} name User name
  * @apiParam (Body) {String} email User email
  * @apiParam (Body) {String} password User password
- * @apiParam (Body) {ObjectId} role_id User role id
+ * @apiParam (Body) {ObjectId} roleId User role id
  *
  * @apiSuccessExample {json} Success Response
  * HTTP/1.1 200 OK
@@ -26,7 +26,7 @@ const userServices = require('../services/user_services');
  *      "_id": "5d3a8091eb2c1f71b8f5c3fc",
  *      "name": "Duy",
  *      "email": "duy@gmail.com"
- *      "role_id": "5d3026531225d4c75879d2da"
+ *      "roleId": "5d3026531225d4c75879d2da"
  *    }
  *  }
  * @apiUse FailedResponse
@@ -35,14 +35,14 @@ router.post('/register', function (req, res) {
   let name = req.body.name;
   let email = req.body.email;
   let password = req.body.password;
-  let role_id = req.body.role_id;
+  let roleId = req.body.roleId;
   if (!name || !email || !password) {
     res.json(utils.failedResponse({
       message: errors.USER_03,
       code: 'USER_03'
     }));
   } else {
-    userServices.register(name, email, password, role_id)
+    userServices.register(name, email, password, roleId)
       .then(data => {
         res.json(utils.successResponse(data));
       })
