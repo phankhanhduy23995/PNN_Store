@@ -36,6 +36,12 @@ router.post('/register', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
   let roleId = req.body.roleId;
+  if (!utils.validateEmail(email)) {
+    res.json(utils.failedResponse({
+      message: errors.USER_04,
+      code: 'USER_04'
+    }));
+  }
   if (!name || !email || !password) {
     res.json(utils.failedResponse({
       message: errors.USER_03,
@@ -79,6 +85,12 @@ router.post('/login', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
 
+  if (!utils.validateEmail(email)) {
+    res.json(utils.failedResponse({
+      message: errors.USER_04,
+      code: 'USER_04'
+    }));
+  }
   if (!email || !password) {
     res.json(utils.failedResponse({
       message: errors.USER_03,

@@ -16,4 +16,5 @@ module.exports = {
   USER_01: 'The email has already existed.',
   USER_02: 'The user does not exist.',
   USER_03: 'Requires a name, email, and password field.',
+  USER_04: 'Invalid email.',
 };
