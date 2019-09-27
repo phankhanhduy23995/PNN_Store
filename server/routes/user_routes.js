@@ -36,18 +36,18 @@ router.post('/register', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
   let roleId = req.body.roleId;
-  if (!utils.validateEmail(email)) {
-    res.json(utils.failedResponse({
-      message: errors.USER_04,
-      code: 'USER_04'
-    }));
-  }
   if (!name || !email || !password) {
     res.json(utils.failedResponse({
       message: errors.USER_03,
       code: 'USER_03'
     }));
   } else {
+    if (!utils.validateEmail(email)) {
+      res.json(utils.failedResponse({
+        message: errors.USER_04,
+        code: 'USER_04'
+      }));
+    }
     userServices.register(name, email, password, roleId)
       .then(data => {
         res.json(utils.successResponse(data));
@@ -85,18 +85,18 @@ router.post('/login', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
 
-  if (!utils.validateEmail(email)) {
-    res.json(utils.failedResponse({
-      message: errors.USER_04,
-      code: 'USER_04'
-    }));
-  }
   if (!email || !password) {
     res.json(utils.failedResponse({
       message: errors.USER_03,
       code: 'USER_03'
     }));
   } else {
+    if (!utils.validateEmail(email)) {
+      res.json(utils.failedResponse({
+        message: errors.USER_04,
+        code: 'USER_04'
+      }));
+    }
     userServices.login(email, password)
       .then(data => {
         res.json(utils.successResponse(data));
