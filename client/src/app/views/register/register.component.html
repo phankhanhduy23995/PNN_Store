@@ -11,28 +11,49 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-user"></i></span>
                 </div>
-                <input [(ngModel)]="registerData.name" type="text" class="form-control" placeholder="{{'REGISTER.PHD.USERNAME' | translate}}" autocomplete="username" required>
+                <input *ngIf="validUsername.valid" [(ngModel)]="registerData.name" type="text" (blur)="validateInput($event)" class="form-control" placeholder="{{'REGISTER.PHD.USERNAME' | translate}}" id="username">
+                <input *ngIf="!validUsername.valid" style="border-color: red" [(ngModel)]="registerData.name" type="text" (blur)="validateInput($event)" class="form-control" placeholder="{{'REGISTER.PHD.USERNAME' | translate}}" id="username" title='{{validUsername.message}}'>
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
                 </div>
-                <input [(ngModel)]="registerData.email" type="text" class="form-control" placeholder="{{'REGISTER.PHD.EMAIL' | translate}}" autocomplete="email" required>
+                <input *ngIf="validEmail.valid" [(ngModel)]="registerData.email" type="text" (blur)="validateInput($event)" class="form-control" placeholder="{{'REGISTER.PHD.EMAIL' | translate}}" id="email">
+                <input *ngIf="!validEmail.valid" style="border-color: red" [(ngModel)]="registerData.email" type="text" (blur)="validateInput($event)" class="form-control" placeholder="{{'REGISTER.PHD.EMAIL' | translate}}" id="email" title='{{validEmail.message}}'>
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-lock"></i></span>
                 </div>
-                <input [(ngModel)]="registerData.password" type="password" class="form-control" placeholder="{{'REGISTER.PHD.PASSWORD' | translate}}" autocomplete="new-password" required>
+                <input *ngIf="validPassword.valid" [(ngModel)]="registerData.password" type="password" (blur)="validateInput($event)" class="form-control" placeholder="{{'REGISTER.PHD.PASSWORD' | translate}}" id="password" #password="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input *ngIf="!validPassword.valid" style="border-color: red" [(ngModel)]="registerData.password" type="password" (blur)="validateInput($event)" class="form-control" placeholder="{{'REGISTER.PHD.PASSWORD' | translate}}" id="password" title='{{validPassword.message}}'
+                  #password="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
               </div>
               <!-- <div class="input-group mb-4">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-lock"></i></span>
-                  </div>
-                  <input type="password" class="form-control" placeholder="Repeat password" autocomplete="new-password" required>
-                </div> -->
-              <button type="button" class="btn btn-block btn-success" (click)="doRegister()">{{'REGISTER.BUTTON.REGISTER' | translate}}</button>
-              <button type="button" class="btn btn-block btn-secondary" (click)="goLoginPage()">{{'REGISTER.BUTTON.GO_LOGIN' | translate}}</button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="icon-lock"></i></span>
+                </div>
+                <input *ngIf="validConfirmPassword.valid" type="password" class="form-control" (blur)="validateInput($event)" placeholder="Confirm password" id="confirmPassword">
+                <input *ngIf="!validConfirmPassword.valid" style="border-color: red" type="password" class="form-control" (blur)="validateInput($event)" placeholder="Confirm password" id="confirmPassword" title='{{validConfirmPassword.message}}'>
+              </div> -->
+
+              <!-- <div class="form-group">
+                <input type="password" [(ngModel)]="registerData.password" name="password" placeholder="Password" class="form-control" required #password="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+                <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
+                  <div *ngIf="password.errors.required"> Password is required. </div>
+                  <div *ngIf="password.errors.pattern"> Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="password" [(ngModel)]="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control" required #confirmpassword="ngModel" pattern="{{ password.value }}" />
+                <div *ngIf=" confirmpassword.invalid && (confirmpassword.touched)" class="alert alert-danger">
+                  <div *ngIf="confirmpassword.errors.required"> Confirm password is required. </div>
+                  <div *ngIf="confirmpassword.errors.pattern"> Password & Confirm Password does not match.</div>
+                </div>
+              </div> -->
+
+              <button class="btn btn-block btn-success" (click)="doRegister()">{{'REGISTER.BUTTON.REGISTER' | translate}}</button>
+              <button class="btn btn-block btn-secondary" (click)="goLoginPage()">{{'REGISTER.BUTTON.GO_LOGIN' | translate}}</button>
             </div>
             <div class="card-footer p-4">
               <div class="row">

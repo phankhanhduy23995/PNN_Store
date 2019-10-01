@@ -13,7 +13,7 @@
 		"LOGIN_FAILED": "Cannot login into P.N.N Store!",
 		"LOGIN_SUCCESS": "Welcome to P.N.N Store!",
 		"NO_USER": "You don't have account?",
-		"NO_USER_DESC": "Please contact administrator to get your account.",
+		"NO_USER_DESC": "Please create an account to continue.",
 		"PHD.EMAIL": "Email",
 		"PHD.PASSWORD": "Password",
 		"TITLE": "Login"
