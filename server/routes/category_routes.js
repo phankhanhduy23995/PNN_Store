@@ -3,12 +3,14 @@
 const express = require('express');
 const router = express.Router();
 const utils = require('../lib/utils');
+const authUtils = require('../lib/auth_utils');
 const categoryServices = require('../services/category_services');
 
 /**
  * @api {get} /categories Get Categories
  * @apiVersion 1.0.0
  * @apiGroup Categories
+ * @apiPermission Admin
  *
  * @apiUse AccessHeader
  *
@@ -30,7 +32,7 @@ const categoryServices = require('../services/category_services');
  *  }
  * @apiUse FailedResponse
  */
-router.get('/', function(req, res) {
+router.get('/', authUtils.authorizeAdmin, function(req, res) {
   categoryServices.getCategories()
     .then(data => {
       res.json(utils.successResponse(data));
@@ -44,6 +46,7 @@ router.get('/', function(req, res) {
  * @api {get} /categories/:_id Get Category
  * @apiVersion 1.0.0
  * @apiGroup Categories
+ * @apiPermission Admin
  *
  * @apiUse AccessHeader
  *
@@ -66,7 +69,7 @@ router.get('/', function(req, res) {
  *  }
  * @apiUse FailedResponse
  */
-router.get('/:_id', function (req, res) {
+router.get('/:_id', authUtils.authorizeAdmin, function (req, res) {
   let _id = req.params._id;
   categoryServices.getCategory(_id)
     .then(data => {
@@ -81,6 +84,7 @@ router.get('/:_id', function (req, res) {
  * @api {post} /categories Create Category
  * @apiVersion 1.0.0
  * @apiGroup Categories
+ * @apiPermission Admin
  *
  * @apiUse AccessHeader
  *
@@ -93,7 +97,7 @@ router.get('/:_id', function (req, res) {
  *  }
  * @apiUse FailedResponse
  */
-router.post('/', function (req, res) {
+router.post('/', authUtils.authorizeAdmin, function (req, res) {
   let body = req.body;
   categoryServices.createCategory(body)
     .then(data => {
@@ -108,6 +112,7 @@ router.post('/', function (req, res) {
  * @api {put} /categories/:_id Update Category
  * @apiVersion 1.0.0
  * @apiGroup Categories
+ * @apiPermission Admin
  *
  * @apiUse AccessHeader
  *
@@ -121,7 +126,7 @@ router.post('/', function (req, res) {
  *  }
  * @apiUse FailedResponse
  */
-router.put('/:_id', function (req, res) {
+router.put('/:_id', authUtils.authorizeAdmin, function (req, res) {
   let _id = req.params._id;
   let body = req.body;
   categoryServices.updateCategory(_id, body)
@@ -137,6 +142,7 @@ router.put('/:_id', function (req, res) {
  * @api {delete} /categories/:_id Delete Category
  * @apiVersion 1.0.0
  * @apiGroup Categories
+ * @apiPermission Admin
  *
  * @apiUse AccessHeader
  *
@@ -149,7 +155,7 @@ router.put('/:_id', function (req, res) {
  *  }
  * @apiUse FailedResponse
  */
-router.delete('/:_id', function (req, res) {
+router.delete('/:_id', authUtils.authorizeAdmin, function (req, res) {
   let _id = req.params._id;
   categoryServices.deleteCategory(_id)
     .then(data => {
