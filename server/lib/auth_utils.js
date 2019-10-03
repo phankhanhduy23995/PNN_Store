@@ -10,12 +10,7 @@ const errors = require('../lib/errors');
 const utils = require('../lib/utils');
 
 const generateToken = function (user) {
-  return new Promise((resolve, reject) => {
-    jwt.sign(user, constants.SECRET, { expiresIn: constants.AUTHENTICATE_EXPIRE }, (error, token) => {
-      if (error) return reject(error);
-      return resolve(token);
-    });
-  })
+  return jwt.sign(user, constants.SECRET, { expiresIn: constants.AUTHENTICATE_EXPIRE });
 }
 
 function authorizeRoles(roles, req) {

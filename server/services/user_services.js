@@ -107,13 +107,17 @@ module.exports.login = function (email, password) {
         };
 
         user.last_login = new Date();
-        return Promise.all([roleUser, resultData, auth_utils.generateToken(resultData), user.save(session)]);
+        return Promise.all([roleUser, resultData, user.save(session)]);
       })
-      .then(([roleUser, resultData, token]) => {
+      .then(([roleUser, resultData]) => {
+        resultData.role = roleUser;
+        let token = auth_utils.generateToken(resultData);
+        resultData.token = token;
+        return resultData;
+      })
+      .then((resultData) => {
         session.commitTransaction();
         session.endSession();
-        resultData.role = roleUser;
-        resultData.token = token;
         return resolve(resultData);
       })
       .catch(error => {
