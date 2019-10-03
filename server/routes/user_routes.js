@@ -3,8 +3,40 @@
 const express = require('express');
 const router = express.Router();
 const utils = require('../lib/utils');
+const authUtils = require('../lib/auth_utils');
 const errors = require('../lib/errors');
 const userServices = require('../services/user_services');
+
+/**
+ * @api {get} /users Get Users
+ * @apiVersion 1.0.0
+ * @apiGroup Users
+ *
+ * @apiUse AccessHeader
+ *
+ * @apiSuccessExample {json} Success Response
+ * HTTP/1.1 200 OK
+ *  {
+ *    "success": true,
+ *    "data": [{
+ *      "_id": "5d7ba044defed14c2830defb",
+ *      "name": "Duy",
+ *      "email": "duy@gmail.com",
+ *      "roleId": "5d3026531225d4c75879d2da",
+ *      "lastLogin": "2019-09-16T06:37:13.825Z"
+ *    }]
+ *  }
+ * @apiUse FailedResponse
+ */
+router.get('/', authUtils.authorizeAdmin, function (req, res) {
+  userServices.getUsers()
+    .then(data => {
+      res.json(utils.successResponse(data));
+    })
+    .catch(error => {
+      res.json(utils.failedResponse(error));
+    });
+});
 
 /**
  * @api {post} /users/register Register

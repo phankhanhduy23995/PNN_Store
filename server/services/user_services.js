@@ -128,3 +128,16 @@ module.exports.login = function (email, password) {
       })
   });
 };
+
+module.exports.getUsers = function () {
+  return new Promise((resolve, reject) => {
+    User.find({}, { _id: 1, name: 1, email: 1, roleId: 1, lastLogin: 1 })
+      .then(result => {
+        return resolve(result);
+      })
+      .catch(error => {
+        logger.error(error);
+        return reject(error);
+      })
+  });
+}
