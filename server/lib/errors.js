@@ -11,6 +11,7 @@ module.exports = {
   },
   PASSWORD_01: 'Cannot hash password!',
   PASSWORD_02: 'Password invalid!',
+  PRODUCT_01: 'The product does not exist.',
   ROLE_01: 'The role does not exist.',
   SERVICE_01: 'Error occurred while calling service.',
   USER_01: 'The email has already existed.',
