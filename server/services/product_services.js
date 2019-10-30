@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 const log4js = require('log4js');
 const logger = log4js.getLogger('user_services');
 const Product = mongoose.model('product');
+const Category = mongoose.model('category');
 const errors = require('../lib/errors');
 
 module.exports.getProducts = function () {
@@ -21,14 +22,19 @@ module.exports.getProducts = function () {
 module.exports.getProduct = function (_id) {
   return new Promise((resolve, reject) => {
     Product.findOne({ _id }, { createdAt: 0, updatedAt: 0 })
-      .then(result => {
-        if (result == null) {
+      .then(product => {
+        if (product == null) {
           throw {
             message: errors.PRODUCT_01,
             code: 'PRODUCT_01'
           }
         }
-        return resolve(result);
+
+        return Promise.all([product, Category.findOne({ _id: product.categoryId }, { _id: 1, name: 1 })]);
+      })
+      .then(([product, category]) => {
+        product.category = category;
+        return resolve(product);
       })
       .catch(error => {
         logger.error(error);
@@ -39,8 +45,8 @@ module.exports.getProduct = function (_id) {
 
 module.exports.createProduct = function (body) {
   const newProduct = new Product(body);
-  return new Promise((resolve, reject) => {
-    Product.collection.insert(newProduct)
+  return new Promise(async (resolve, reject) => {
+    Product.collection.insertOne(newProduct)
       .then(result => {
         if (result == null) {
           throw {
@@ -48,7 +54,20 @@ module.exports.createProduct = function (body) {
             code: 'CREATE'
           };
         }
-        return resolve(null);
+
+        let product = result.ops[0];
+        return Promise.all([product, Category.findOneAndUpdate(
+          { _id: body.categoryId },
+          {
+            $push: {
+              productIds: product._id
+            }
+          },
+          { new: true }
+        )]);
+      })
+      .then(([product]) => {
+        return resolve(product);
       })
       .catch(error => {
         logger.error(error);
