@@ -15,8 +15,6 @@ module.exports.register = function (name, email, password, roleId) {
   user.email = email;
 
   return new Promise(async (resolve, reject) => {
-    const session = await User.startSession();
-    session.startTransaction();
 
     utils.hashPassword(password)
       .then((hash) => {
@@ -44,7 +42,7 @@ module.exports.register = function (name, email, password, roleId) {
         }
         user.roleId = role._id;
         user.passwordDigest = hash;
-        return Promise.all([user.save(session), role]);
+        return Promise.all([user.save(), role]);
       })
       .then(([user, role]) => {
         if (user == null) {
@@ -54,20 +52,27 @@ module.exports.register = function (name, email, password, roleId) {
           };
         }
 
-        let resultData = {
+        let result = {
           _id: user._id,
           name: user.name,
           email: user.email,
           role: role
         };
 
-        session.commitTransaction();
-        session.endSession();
-        return resolve(resultData);
+        return Promise.all([result, Role.findOneAndUpdate(
+          { _id: role._id },
+          {
+            $push: {
+              userIds: user._id
+            }
+          },
+          { new: true }
+        )]);
+      })
+      .then(([result]) => {
+        return resolve(result);
       })
       .catch(error => {
-        session.abortTransaction();
-        session.endSession();
         logger.error(error);
         return reject(error);
       });
@@ -76,8 +81,6 @@ module.exports.register = function (name, email, password, roleId) {
 
 module.exports.login = function (email, password) {
   return new Promise(async (resolve, reject) => {
-    const session = await User.startSession();
-    session.startTransaction();
 
     User.findOne({ email })
       .then(user => {
@@ -107,7 +110,7 @@ module.exports.login = function (email, password) {
         };
 
         user.last_login = new Date();
-        return Promise.all([roleUser, resultData, user.save(session)]);
+        return Promise.all([roleUser, resultData, user.save()]);
       })
       .then(([roleUser, resultData]) => {
         resultData.role = roleUser;
@@ -116,13 +119,9 @@ module.exports.login = function (email, password) {
         return resultData;
       })
       .then((resultData) => {
-        session.commitTransaction();
-        session.endSession();
         return resolve(resultData);
       })
       .catch(error => {
-        session.abortTransaction();
-        session.endSession();
         logger.error(error);
         return reject(error);
       })
