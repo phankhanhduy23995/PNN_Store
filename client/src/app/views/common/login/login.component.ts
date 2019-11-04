@@ -16,6 +16,7 @@ import { LoginVM } from 'src/app/view-models/users/login-vm';
 export class LoginComponent implements OnInit {
   model: LoginVM = new LoginVM();
   session: SessionVM;
+
   constructor(
     private titleService: Title,
     private router: Router,
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticateService) { }
 
   ngOnInit() {
-    this.titleService.setTitle(this.translate.instant('PAGE_TITLE.LOGIN'));
+    this.titleService.setTitle('PNN - Login');
 
     this.authService.session$.subscribe(
       data => {
@@ -58,6 +59,8 @@ export class LoginComponent implements OnInit {
         error => {
           this.toastr.error(this.translate.instant('LOGIN.LOGIN_FAILED'));
         });
+    } else {
+      this.toastr.error(this.translate.instant('Please complete all information!'));
     }
   }
 
