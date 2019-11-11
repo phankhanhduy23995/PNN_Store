@@ -29,7 +29,7 @@ module.exports.register = function (name, email, password, roleId) {
         if (roleId) {
           roleQuery = Role.findOne({ _id: roleId }, { _id: 1, code: 1 });
         } else {
-          roleQuery = Role.findOne({ code: enums.ROLE.USER }, { _id: 1, code: 1 });
+          roleQuery = Role.findOne({ code: enums.ROLE.DEFAULT }, { _id: 1, code: 1 });
         }
         return Promise.all([hash, roleQuery]);
       })

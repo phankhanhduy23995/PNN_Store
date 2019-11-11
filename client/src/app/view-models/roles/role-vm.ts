@@ -3,7 +3,7 @@ export class RoleVM {
     ADMIN: 'admin',
     MANAGER: 'manager',
     EMPLOYEE: 'employee',
-    USER: 'user'
+    DEFAULT: 'default'
   };
 
   id: number;

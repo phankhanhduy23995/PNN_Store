@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { adminNavItems } from '../nav/admin';
 import { hrNavItems } from '../nav/manager';
 import { employeeNavItems } from '../nav/employee';
-import { userNavItems } from '../nav/user';
+import { defaultNavItems } from '../nav/default';
 import { AuthenticateService } from '../../services/authenticate.service';
 import { SessionVM } from '../../view-models/session/session-vm';
 import { RoleVM } from '../../view-models/roles/role-vm';
@@ -56,7 +56,7 @@ export class DefaultLayoutComponent implements OnInit {
               break;
             }
             default: {
-              this.navItems = userNavItems;
+              this.navItems = defaultNavItems;
               break;
             }
           }

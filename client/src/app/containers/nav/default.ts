@@ -1,4 +1,4 @@
-export const userNavItems = [
+export const defaultNavItems = [
   {
     name: 'Dashboard',
     url: '/dashboard',
