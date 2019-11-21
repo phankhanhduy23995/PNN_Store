@@ -56,6 +56,12 @@ export const routes: Routes = [
         data: { roles: [RoleVM.ROLES.EMPLOYEE, RoleVM.ROLES.DEFAULT, RoleVM.ROLES.MANAGER, RoleVM.ROLES.ADMIN] },
         loadChildren: './views/common/dashboard/dashboard.module#DashboardModule'
       },
+      {
+        path: 'users',
+        canActivate: [AuthorizeService],
+        data: { roles: [RoleVM.ROLES.ADMIN] },
+        loadChildren: './views/manager/users/users.module#UsersModule'
+      },
     ]
   },
   { path: '**', component: P404Component }
